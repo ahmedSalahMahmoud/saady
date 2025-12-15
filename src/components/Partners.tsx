@@ -3,20 +3,12 @@ import { useState } from 'react';
 const Partners = () => {
   const [isPaused, setIsPaused] = useState(false);
 
-  // Partner logos - replace these with actual partner logo images
-  // You can add partner logos to the public folder and reference them here
-  const partners = [
-    { id: 1, name: 'شريك 1', logo: '/placeholder.svg' },
-    { id: 2, name: 'شريك 2', logo: '/placeholder.svg' },
-    { id: 3, name: 'شريك 3', logo: '/placeholder.svg' },
-    { id: 4, name: 'شريك 4', logo: '/placeholder.svg' },
-    { id: 5, name: 'شريك 5', logo: '/placeholder.svg' },
-    { id: 6, name: 'شريك 6', logo: '/placeholder.svg' },
-    { id: 7, name: 'شريك 7', logo: '/placeholder.svg' },
-    { id: 8, name: 'شريك 8', logo: '/placeholder.svg' },
-    { id: 9, name: 'شريك 9', logo: '/placeholder.svg' },
-    { id: 10, name: 'شريك 10', logo: '/placeholder.svg' },
-  ];
+  // Partner logos from /public/partners/1.jpg ... /public/partners/41.jpg
+  const partners = Array.from({ length: 41 }, (_, i) => ({
+    id: i + 1,
+    name: `شريك ${i + 1}`,
+    logo: `/partners/${i + 1}.jpg`,
+  }));
 
   // Duplicate partners for seamless infinite scroll (2 sets for perfect loop)
   const duplicatedPartners = [...partners, ...partners];
