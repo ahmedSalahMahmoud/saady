@@ -28,7 +28,7 @@ const Partners = () => {
         </div>
 
         {/* Partners Slider - CSS Animation Based */}
-        <div 
+        <div
           className="w-full overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -58,7 +58,7 @@ const Partners = () => {
             ))}
           </div>
         </div>
-        
+
         <style>{`
           @keyframes scrollSteps {
             0%, 8% {
