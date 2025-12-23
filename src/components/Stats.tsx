@@ -30,7 +30,7 @@ const Stats = () => {
   ];
 
   return (
-    <section id="why-us" className="py-32 lg:py-40 gradient-dark">
+    <section id="why-us" className="py-16 lg:py-20 gradient-dark">
       <div className="container-rtl">
         {/* Section Header */}
         <div className="text-center mb-16">

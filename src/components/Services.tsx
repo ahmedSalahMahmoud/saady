@@ -18,7 +18,7 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-32 lg:py-40 bg-muted/30">
+    <section id="services" className="py-16 lg:py-20 bg-muted/30">
       <div className="container-rtl">
         {/* Section Header */}
         <div className="mb-12">

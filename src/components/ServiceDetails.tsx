@@ -33,7 +33,7 @@ const ServiceDetails = () => {
   ];
 
   return (
-    <section className="py-32 lg:py-40 bg-background">
+    <section className="py-16 lg:py-20 bg-background">
       <div className="container-rtl">
         {/* Service Tabs */}
         <div className="flex flex-wrap justify-center gap-4 mb-16">

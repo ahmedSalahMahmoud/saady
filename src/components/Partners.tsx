@@ -1,93 +1,106 @@
-import { useState } from 'react';
+import React from 'react';
 
-const Partners = () => {
-  const [isPaused, setIsPaused] = useState(false);
+type Partner = {
+  id: number;
+  name: string;
+  logo: string;
+};
 
-  // Partner logos from /public/partners/1.jpg ... /public/partners/41.jpg
-  const partners = Array.from({ length: 41 }, (_, i) => ({
+const Partners: React.FC = () => {
+  // Logic to handle 41 partners - using Array.from to simulate the full list
+  const partners: Partner[] = Array.from({ length: 41 }, (_, i) => ({
     id: i + 1,
     name: `شريك ${i + 1}`,
-    logo: `/partners/${i + 1}.jpg`,
+    logo: `/saady/partners/${i + 1}.jpg`,
   }));
 
-  // Duplicate partners for seamless infinite scroll (2 sets for perfect loop)
-  const duplicatedPartners = [...partners, ...partners];
+  const LOOP_COUNT = 3;
 
   return (
-    <section id="partners" className="py-32 lg:py-40 bg-muted/30">
+    <section className="py-16 lg:py-20 overflow-hidden bg-background" dir="rtl">
+      <style>{`
+        .marquee-container {
+          overflow: hidden;
+          width: 100%;
+          /* Added vertical padding so the translateY hover effect doesn't clip */
+          padding: 30px 0;
+          margin: -30px 0; 
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .marquee__track {
+          display: flex;
+          width: max-content;
+          /* Duration increased to 70s because items are larger */
+          animation: marquee-scroll 70s linear infinite;
+        }
+
+        .marquee-container:hover .marquee__track {
+          animation-play-state: paused;
+        }
+
+        .marquee__item {
+          flex: 0 0 auto;
+          width: 280px; 
+          height: 180px;
+          margin-inline: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+          border-radius: 20px;
+          border: 1px solid rgba(0,0,0,0.06);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+          padding: 30px;
+          position: relative;
+        }
+
+        .marquee__item:hover {
+          /* Now moves up freely without hiding */
+          transform: translateY(-12px); 
+          border-color: hsl(var(--primary));
+          box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+          z-index: 10;
+        }
+
+        @keyframes marquee-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(33.333%); }
+        }
+      `}</style>
+
       <div className="container-rtl">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-6">
-            الشركاء
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground font-cairo">
+            شركاء النجاح
           </h2>
-          <div className="w-32 h-1.5 bg-accent mx-auto mb-6" />
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            شركاؤنا في النجاح
-          </p>
+          <div className="w-20 h-1.5 bg-primary mx-auto mt-4 rounded-full" />
         </div>
 
-        {/* Partners Slider - CSS Animation Based */}
-        <div
-          className="w-full overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div
-            className="flex pb-8"
-            style={{
-              animation: isPaused ? 'none' : 'scrollSteps 60s infinite',
-              width: 'max-content',
-              gap: '2rem'
-            }}
-          >
-            {/* Render partners multiple times for seamless loop */}
-            {duplicatedPartners.map((partner, index) => (
-              <div
-                key={`${partner.id}-${index}`}
-                className="flex-shrink-0 w-56 md:w-64 lg:w-72 xl:w-80 group"
-              >
-                <div className="bg-white rounded-xl p-6 md:p-8 lg:p-10 h-40 md:h-48 lg:h-56 flex items-center justify-center border border-border/50 hover:border-primary/30 hover:shadow-md transition-all duration-300">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100 transition-all duration-300"
-                  />
-                </div>
-              </div>
+        <div className="marquee-container">
+          <div className="marquee__track">
+            {Array.from({ length: LOOP_COUNT }).map((_, loopIndex) => (
+              <React.Fragment key={`loop-${loopIndex}`}>
+                {partners.map((partner) => (
+                  <div key={`${loopIndex}-${partner.id}`} className="marquee__item">
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      loading="lazy"
+                      /* max-h-28 (112px) makes the logos significantly larger */
+                      className="max-h-28 w-full object-contain grayscale hover:grayscale-0 transition-all duration-500 opacity-80 hover:opacity-100"
+                    />
+                  </div>
+                ))}
+              </React.Fragment>
             ))}
           </div>
         </div>
-
-        <style>{`
-          @keyframes scrollSteps {
-            0%, 8% {
-              transform: translateX(0);
-            }
-            10%, 18% {
-              transform: translateX(calc(-50% / 5));
-            }
-            20%, 28% {
-              transform: translateX(calc(-50% * 2 / 5));
-            }
-            30%, 38% {
-              transform: translateX(calc(-50% * 3 / 5));
-            }
-            40%, 48% {
-              transform: translateX(calc(-50% * 4 / 5));
-            }
-            50%, 58% {
-              transform: translateX(-50%);
-            }
-            60%, 100% {
-              transform: translateX(0);
-            }
-          }
-        `}</style>
       </div>
     </section>
   );
 };
 
 export default Partners;
-

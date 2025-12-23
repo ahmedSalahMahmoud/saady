@@ -62,7 +62,7 @@ const Timeline = () => {
   };
 
   return (
-    <section id="about" className="py-32 lg:py-40 bg-background relative overflow-hidden">
+    <section id="about" className="py-16 lg:py-20 bg-background relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_hsl(var(--primary))_1px,_transparent_1px)] bg-[size:40px_40px]" />
@@ -101,7 +101,7 @@ const Timeline = () => {
         </div>
 
         {/* Timeline Scroll Container - Full Width */}
-        <div className="w-full overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="w-full" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div
             ref={scrollRef}
             className="flex gap-6 pb-8 px-4 md:px-4 lg:px-6"
